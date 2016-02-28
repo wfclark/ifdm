@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset=utf-8 />
+
+
+<title>Vector Borne Disease Analysis</title>
+
+
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+
+
+
+<script type="text/javascript"
+            src="jquery-1.12.1.min.js">
+</script>
+
+<script type="text/javascript"
+            src="/pieha/jquery-ui-1.11.4.custom/jquery-ui.js">
+</script>
+
+
+<link type="text/css" rel="stylesheet"
+          href="/pieha/jquery-ui-1.11.4.custom/jquery-ui.css"/>
+
+
+<script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+
+<link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
+
+<link href="http://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet" type="text/css"/>
+
+<body>
+<style>
+.menu-ui {
+  background:#fff;
+  position:absolute;
+  top:10px;right:10px;
+  z-index:1;
+  border-radius:3px;
+  width:120px;
+  border:1px solid rgba(0,0,0,0.4);
+  }
+  .menu-ui a {
+    font-size:13px;
+    color:#404040;
+    display:block;
+    margin:0;padding:0;
+    padding:10px;
+    text-decoration:none;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+    text-align:center;
+    }
+    .menu-ui a:first-child {
+      border-radius:3px 3px 0 0;
+      }
+    .menu-ui a:last-child {
+      border:none;
+      border-radius:0 0 3px 3px;
+      }
+    .menu-ui a:hover {
+      background:#f8f8f8;
+      color:#404040;
+      }
+    .menu-ui a.active {
+      background:#3887BE;
+      color:#FFF;
+      }
+      .menu-ui a.active:hover {
+        background:#3074a4;
+        }
+#titleBar_new {
+    color: #765;
+    font-family: 'Lobster Two', Helvetica, sans-serif;
+    font-size: 1.9em;
+    font-weight: bolder;
+    letter-spacing: -.5px;
+    position:fixed;
+    left: 2%;
+    top: 88%;
+    
+    }
+
+
+#btnSumw {
+    color: #404040;
+    font-family: 'Lobster Two', Helvetica, sans-serif;
+    background:#fff;
+    position:absolute;
+    top:50px;right:12.5px;
+    z-index:1;
+    border-radius:3px;
+    border:1px solid rgba(0,0,0,0.4);
+    }
+
+}
+
+</style>
+<div id='map'>
+</div>
+<script>
+
+L.mapbox.accessToken = 'pk.eyJ1Ijoid2ZjbGFyazIiLCJhIjoiU1dJakY2VSJ9.y9sbqDVvPJOCv7Sv5k3jZA';
+  var map = L.mapbox.map('map', null, {
+      maxZoom: 18
+  }).setView([40, -90], 5);
+
+  var basemaps = {
+      Streets: L.mapbox.tileLayer('mapbox.streets'),
+      Outdoors: L.mapbox.tileLayer('mapbox.outdoors'),
+      Satellite: L.mapbox.tileLayer('mapbox.satellite'),
+      Temperature: L.tileLayer.wms('http://gis.srh.noaa.gov/arcgis/services/NDFDTemps/MapServer/WMSServer', {
+        format: 'img/png',
+        transparent: true,
+        layers: 16 }),
+      Precipitation: L.tileLayer.wms('http://nowcoast.noaa.gov/arcgis/services/nowcoast/analysis_meteohydro_sfc_qpe_time/MapServer/WmsServer', {
+        format: 'image/png',
+        transparent: true,
+        layers: '5'
+        }) 
+  };
+  
+  var exposure = { 
+      Habitat : L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:deciduous_forest'
+      }),
+      
+      Climate :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:climate'
+      }), 
+
+      Ticks(Male) :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:males'
+      }),
+
+      Ticks(Female) :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:females'
+      }),
+
+      Ticks(Nymphs) :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:nymphs'
+      }),
+
+      Hosts :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+        format: 'image/png',
+        transparent: true,
+        layers: 'lyme:hosts'
+      }),
+  };
+
+  layers.Streets.addTo(map);
+  L.control.layers(layers).addTo(map);
+
+
+</script>
+
+
+<script language="javascript" type="text/javascript">
+  
+    $(function() {
+   
+    $( "#dialog" ).dialog({
+      autoOpen: true,
+      show: {
+        effect: "explode",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+ 
+    $( "#opener" ).click(function() {
+      $( "#dialog" ).dialog( "open" );
+    });
+  });
+
+  $(function() {
+    $( "#dialog1" ).dialog({
+      autoOpen: false,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
+ 
+    $( "#opener1" ).click(function() {
+      $( "#dialog1" ).dialog( "open" );
+    });
+  });
+  
+
+</script>
+
+
+<div id="dialog" title="Summary">
+ <p>This is an exposure tool to show where vector borne diseases are occuring and where they are likely to spread.</p>
+  <p>Specifically, where vector borne lyme disease is increasing due to geostatistical correlations between to habitat, climate, case counts, and known locations of the ticks carrying the lyme disease vector Ixodes Scapularis.
+  </p>
+  <p>For more information:</p>
+  <p>wfclark2@gmail.com, alexberry1992@gmail.com, jrrunkle@ncsu.edu</p> 
+</div>
+
+<div id="dialog1" title="Lyme Disease">
+  <p>Statistics</p>
+
+<div id="titleBar_new">
+      <h2>Vector Borne Disease Exposure</h2>
+        </div>
+<div id="btnSumw" class="btn-large header-bar">
+    <button id="opener1">~</button>   
+</div>
+
+
+</body>
+</html>
+
