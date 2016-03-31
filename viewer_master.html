@@ -127,49 +127,49 @@ L.mapbox.accessToken = 'pk.eyJ1Ijoid2ZjbGFyazIiLCJhIjoiU1dJakY2VSJ9.y9sbqDVvPJOC
   
   var exposure = { 
       
-      Habitat: L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      Habitat: L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
         layers: 'lyme:deciduous_forest'
       }),
       
-      Climate:  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      Climate:  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
-        layers: 'lyme:climate'
+        layers: 'lyme:climate_temp'
       }), 
 
-      MaleTicks:  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      MaleTicks:  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
-        layers: 'lyme:males'
+        layers: 'lyme:males_locations'
       }),
 
-      FemaleTicks:  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      FemaleTicks:  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
-        layers: 'lyme:females'
+        layers: 'lyme:females_locations'
       }),
 
-      NymphalTicks :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      NymphalTicks :  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
-        layers: 'lyme:nymphs'
+        layers: 'lyme:nymphs_locations'
       }),
 
-      VectorHosts :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      VectorHosts :  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
         layers: 'lyme:hosts'
       }),
 
-      Census :  L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      Census :  L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
         layers: 'lyme:Census'
       }),
 
-      HealthCareFacilities : L.tileLayer.wms('http://ec2-52-36-196-184.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
+      HealthCareFacilities : L.tileLayer.wms('http://ec2-52-34-179-131.us-west-2.compute.amazonaws.com:8080/geoserver/opengeo/wms?', {
         format: 'image/png',
         transparent: true,
         layers: 'lyme:hosts'
